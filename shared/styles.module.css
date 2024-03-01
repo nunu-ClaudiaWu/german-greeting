@@ -1,0 +1,47 @@
+.App {
+    text-align: center;
+}
+
+.AppHeader {
+    min-height: 95vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    font-size: calc(10px + 2vmin);
+    font-family: monospace;
+    font-weight: normal;
+    color: black;
+}
+
+.AppInput {
+    height: 60vh;
+    width: 90vw;
+    max-width: 1000px;
+    resize: none;
+    border-radius: 10px;
+    border-color: #282c34;
+    border-width: 1px;
+    padding: 10px;
+}
+
+.AppOutput {
+    height: 20px;
+    min-width: 300px;
+    max-width: 90vw;
+    border-radius: 10px;
+    border-color: #282c34;
+    border-width: 1px;
+    border-style: solid;
+    padding: 10px;
+    font-size: large;
+}
+
+.AppButton {
+    background-color: lightcyan;
+    padding: 15px 30px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: medium;
+}
