@@ -5,7 +5,7 @@ env.allowLocalModels = false;
 const CONTACT_NAME_QUESTION = 'Wer hat den Text geschrieben?';
 const MIN_CONTACT_NAME_SCORE = 0.002;
 
-export default async function getContactName(text: string, progressCallback: Function) {
+export default async function getContactName(text: string, progressCallback?: Function) {
     const classifier = await QuestionAnsweringSingleton.getInstance(progressCallback);
     const output = await classifier(CONTACT_NAME_QUESTION, text) as QuestionAnsweringOutput;
 

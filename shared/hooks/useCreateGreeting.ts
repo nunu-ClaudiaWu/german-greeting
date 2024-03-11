@@ -1,38 +1,26 @@
-import {useCallback, useEffect, useRef, useState} from "react";
+import {useEffect, useState} from "react";
+import {generateGreeting} from "../answer-generation/greeting";
 
-export default function useCreateGreeting(): [string | null, boolean | null, (text: string) => void] {
-    const workerRef = useRef<Worker>();
-
-    const [greeting, setGreeting] = useState(null);
-    const [ready, setReady] = useState<boolean | null>(null);
+export default function useCreateGreeting(): [string | undefined, boolean, (text: string) => void] {
+    const [loading, setLoading] = useState<boolean>(false);
+    const [greeting, setGreeting] = useState<string | undefined>();
+    const [text, setText] = useState<string>();
 
     useEffect(() => {
-        if (!workerRef.current) {
-            workerRef.current = new Worker(new URL("../../greetingWorker.ts", import.meta.url), {type: 'module'});
+        if (text) {
+            setLoading(true);
+            setTimeout(() => {
+                generateGreeting(text).then(greeting => {
+                    setGreeting(greeting);
+                    setLoading(false);
+                });
+            }, 50);
         }
+    }, [text]);
 
-        const onMessageReceived = (e: MessageEvent) => {
-            switch (e.data.status) {
-                case 'initiate':
-                    setReady(false);
-                    break;
-                case 'ready':
-                    setReady(true);
-                    break;
-                case 'complete':
-                    setGreeting(e.data.output);
-                    break;
-            }
-        };
-        workerRef.current.addEventListener('message', onMessageReceived);
+    const updateGreeting = (text: string) => {
+        setText(text.trim());
+    };
 
-        return () => workerRef.current?.removeEventListener('message', onMessageReceived);
-    }, []);
-
-    const updateGreeting = useCallback((text: string) => {
-        setGreeting(null);
-        workerRef.current?.postMessage({text: text.trim()});
-    }, []);
-
-    return [greeting, ready, updateGreeting];
+    return [greeting, loading, updateGreeting];
 }

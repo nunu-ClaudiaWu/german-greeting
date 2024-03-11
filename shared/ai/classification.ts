@@ -16,7 +16,7 @@ const GenderClassificationLabels = new Map<string, Gender>([
 
 const MIN_GENDER_SCORE = 0.6;
 
-export default async function getGenderByFirstname(firstname: string, progressCallback: Function) {
+export default async function getGenderByFirstname(firstname: string, progressCallback?: Function) {
 
     const answerer = await ClassificationSingleton.getInstance(progressCallback);
     const labels = Array.from(GenderClassificationLabels.keys());

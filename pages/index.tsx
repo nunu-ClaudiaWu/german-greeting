@@ -4,7 +4,7 @@ import styles from "../shared/styles.module.css";
 import texts from "../shared/texts.json";
 
 export default function Index() {
-    const [greeting, ready, updateGreeting] = useCreateGreeting();
+    const [greeting, loading, updateGreeting] = useCreateGreeting();
     const [text, setText] = useState(texts[0].text);
 
     async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -28,18 +28,13 @@ export default function Index() {
                     )}
                 </select>
                 <textarea className={styles.AppInput} id="textInput" value={text} 
-                          onChange={(event) => setText(event.target.value)}></textarea>
-                <button className={styles.AppButton} type="submit" 
-                        disabled={ready === false || (!greeting && ready !== null)}>
+                          onChange={(event) => setText(event.target.value)}>
+                </textarea>
+                <button className={styles.AppButton} type="submit" disabled={loading}>
                     Generate German Greeting
                 </button>
-                <div
-                    className={styles.AppOutput}>
-                    {
-                        ready === false ? 'Loading...' :
-                            !greeting && ready !== null ? 'Processing...' :
-                                greeting
-                    }
+                <div className={styles.AppOutput}>
+                    {loading ? 'Processing...' : greeting}
                 </div>
             </form>
         </div>

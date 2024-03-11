@@ -9,7 +9,7 @@ const DU_WORDS = ['du', 'dein', 'deine', 'deiner', 'deinen', 'deines', 'deinem',
 const FORM_OF_ADDRESS_WORDS = Object.values(Gender);
 const INFORMAL_GREETINGS = ['hallo', 'liebe', 'guten tag', 'guten morgen', 'guten abend'];
 
-export default async function generateGreeting(text: string, statusCallback: Function) {
+export async function generateGreeting(text: string, statusCallback?: Function) {
 
     const name = await getContactName(text, statusCallback);
     const {firstname, lastname} = splitName(name);
